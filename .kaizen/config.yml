@@ -17,7 +17,7 @@ commands:
   verify:
     - "python3 -m json.tool default.json >/dev/null"
     - "grep -q '\"extends\"' default.json && grep -q '\"packageRules\"' default.json"
-    - "test -f skills/gh-link-issue-pr/SKILL.md && test -f skills/kaizen-bug-router/SKILL.md"
+    - "test -f skills/gh-link-issue-pr/SKILL.md && test -f skills/kaizen-bug-router/SKILL.md && test -f skills/pr-guardian/SKILL.md"
   verifyTimeoutMinutes: 15
 builder:
   command: builder-agent
