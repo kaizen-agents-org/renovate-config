@@ -16,7 +16,14 @@ commands:
   setup: null
   verify:
     - "python3 -m json.tool default.json >/dev/null"
-    - "grep -q '\"extends\"' default.json && grep -q '\"packageRules\"' default.json"
+    - |
+      python3 - <<'PY'
+      import json
+      from pathlib import Path
+      data = json.loads(Path("default.json").read_text())
+      assert isinstance(data.get("extends"), list)
+      assert isinstance(data.get("packageRules"), list)
+      PY
     - "test -f skills/gh-link-issue-pr/SKILL.md && test -f skills/kaizen-bug-router/SKILL.md && test -f skills/pr-guardian/SKILL.md"
   verifyTimeoutMinutes: 15
 builder:
