@@ -1,0 +1,41 @@
+name: Validate Renovate config
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          persist-credentials: false
+
+      - name: Validate default.json syntax
+        run: python3 -m json.tool default.json >/dev/null
+
+      - name: Validate default.json shape
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path("default.json").read_text())
+          assert isinstance(data.get("extends"), list)
+          assert isinstance(data.get("packageRules"), list)
+          PY
+
+      - name: Validate vendored skills
+        run: test -f skills/gh-link-issue-pr/SKILL.md && test -f skills/kaizen-bug-router/SKILL.md && test -f skills/pr-guardian/SKILL.md
