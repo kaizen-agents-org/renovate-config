@@ -15,7 +15,7 @@ flowchart LR
     Major -->|yes| Approval["wait for dashboard approval"]
     Major -->|no| Group["group routine non-major updates"]
     Approval --> PR["dependency PR"]
-    Group --> Delay["npm: wait 3 days"] --> PR
+    Group --> Delay["npm packages: wait 3 days"] --> PR
     PR --> Human["human review and merge"]
 ```
 
@@ -73,4 +73,4 @@ When changing `default.json`:
 python3 -m json.tool default.json >/dev/null
 ```
 
-The repository's `.kaizen/config.yml` also validates that `extends` and `packageRules` remain arrays.
+This command is the minimum syntax check. When changing Renovate semantics, also validate against Renovate's configuration tooling or schema documentation. The repository's `.kaizen/config.yml` also checks that `extends` and `packageRules` remain arrays.
