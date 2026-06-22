@@ -1,5 +1,5 @@
 name: "Kaizen improvement"
-description: Request a fix or improvement for the nightly maintenance agent
+description: Request a fix or improvement for the Kaizen Agents organization
 labels: ["kaizen"]
 body:
   - type: textarea
