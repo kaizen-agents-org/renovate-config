@@ -59,6 +59,12 @@ Repositories can extend the shared preset from their own `renovate.json` when th
 
 Use local configuration for repository-specific schedules, managers, package rules, or ignore paths. Keep general organization policy in `default.json`.
 
+## Daily Dogfood Sync
+
+This repository is covered by the Kaizen daily dogfood contract sync. The managed dogfood paths are `.github/ISSUE_TEMPLATE/kaizen.yml`, `.kaizen/config.yml`, and the vendored skills under `skills/`.
+
+The sync should create or update a ready-for-review `Sync Kaizen dogfood contracts` pull request whenever any managed path differs from the shared contract. An absent open sync pull request is healthy only when those managed paths already match the shared contract and the daily run reports `No dogfood sync changes`; it should not be treated as a missed sync for `renovate-config` in that case.
+
 ## Change Guidelines
 
 When changing `default.json`:
