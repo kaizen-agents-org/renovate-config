@@ -143,4 +143,4 @@ Reply and resolve each thread individually, including duplicates and outdated th
 
 ## Current-head completion
 
-After a push, discard prior completion evidence. Pin the new `headRefOid`, wait for required checks and expected bot reviews tied to that SHA, and then repeat the full audit. Success requires zero unresolved threads and two unchanged passing snapshots at least 30 seconds apart after automated review finishes.
+After a push, discard prior completion evidence. Pin the new `headRefOid`, wait for required checks and expected bot reviews tied to that SHA, and then repeat the full audit. Success requires zero unresolved actionable threads; when conversation resolution is enforced, it requires zero unresolved threads in total, including outdated threads. It also requires two unchanged passing snapshots at least 30 seconds apart after automated review finishes.

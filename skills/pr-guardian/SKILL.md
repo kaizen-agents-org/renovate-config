@@ -62,7 +62,7 @@ Before reporting success:
 1. Pin the current head SHA and verify `isDraft=false`, `mergeable=MERGEABLE`, and an allowed `mergeStateStatus`.
 2. Verify every required check is passing for that head.
 3. Verify expected automated reviews are terminal for that head; an older or missing `commit_id` is pending evidence.
-4. Re-run the paginated review-thread audit after the reviewers finish and require zero unresolved threads, including outdated threads.
+4. Re-run the paginated review-thread audit after the reviewers finish. Require zero unresolved actionable threads; when the repository enforces conversation resolution, require zero unresolved threads in total, including outdated threads.
 5. Require every actionable top-level comment and check annotation to have an explicit disposition.
 6. Complete the stabilization snapshots described above.
 
