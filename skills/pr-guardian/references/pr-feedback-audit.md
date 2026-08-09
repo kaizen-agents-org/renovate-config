@@ -93,11 +93,12 @@ query($owner:String!, $name:String!, $number:Int!, $cursor:String) {
   if [[ "$(jq -r '.data.repository.pullRequest.reviewThreads.pageInfo.hasNextPage' <<<"${page}")" != true ]]; then
     break
   fi
-  cursor="$(jq -r '.data.repository.pullRequest.reviewThreads.pageInfo.endCursor' <<<"${page}")"
-  if [[ -z "${cursor}" || "${cursor}" == null ]]; then
-    echo 'reviewThreads reported another page without an endCursor' >&2
+  next_cursor="$(jq -r '.data.repository.pullRequest.reviewThreads.pageInfo.endCursor' <<<"${page}")"
+  if [[ -z "${next_cursor}" || "${next_cursor}" == null || "${next_cursor}" == "${cursor}" ]]; then
+    echo 'reviewThreads reported another page without an advancing endCursor' >&2
     exit 1
   fi
+  cursor="${next_cursor}"
 done
 ```
 
@@ -152,11 +153,12 @@ query($threadId:ID!, $cursor:String) {
   if [[ "$(jq -r '.data.node.comments.pageInfo.hasNextPage' <<<"${page}")" != true ]]; then
     break
   fi
-  cursor="$(jq -r '.data.node.comments.pageInfo.endCursor' <<<"${page}")"
-  if [[ -z "${cursor}" || "${cursor}" == null ]]; then
-    echo 'review comments reported another page without an endCursor' >&2
+  next_cursor="$(jq -r '.data.node.comments.pageInfo.endCursor' <<<"${page}")"
+  if [[ -z "${next_cursor}" || "${next_cursor}" == null || "${next_cursor}" == "${cursor}" ]]; then
+    echo 'review comments reported another page without an advancing endCursor' >&2
     exit 1
   fi
+  cursor="${next_cursor}"
 done
 ```
 
